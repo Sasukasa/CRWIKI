@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中国铁路百科 | China Railway Wiki</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'rail-red': '#E3000F',
+            'industry-blue': '#0055A4',
+            'signal-yellow': '#FFCC00',
+            'pure-black': '#000000',
+            'pure-white': '#FFFFFF',
+          },
+          fontFamily: {
+            'swiss': ['Helvetica Neue', 'Inter', 'Roboto', 'Arial', 'sans-serif'],
+          },
+          screens: {
+            'sm': '640px',
+            'md': '768px',
+            'lg': '1024px',
+            'xl': '1280px',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* ========================================
+       SWISS DESIGN MANIFESTO - Core Rules
+       ======================================== */
+
+    * {
+      font-family: 'Helvetica Neue', 'Inter', 'Roboto', 'Arial', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* NO rounded corners anywhere */
+    *, *::before, *::after {
+      border-radius: 0 !important;
+    }
+
+    /* NO shadows (unless explicitly in hover) */
+    .no-shadow {
+      box-shadow: none !important;
+    }
+
+    /* Left-aligned only - never center or justify */
+    .text-left-force {
+      text-align: left !important;
+    }
+
+    /* Responsive Typography Scale - Swiss Style */
+    .hero-title {
+      font-size: clamp(3rem, 12vw, 9rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 3vw, 2rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    .section-label {
+      font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .pillar-title {
+      font-size: clamp(2rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .pillar-count {
+      font-size: clamp(0.75rem, 1.5vw, 1.25rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    /* ========================================
+       Animations - Swiss Precision
+       ======================================== */
+
+    /* Page load - stagger reveal */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes heavyPullDown {
+      0% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+      30% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    /* Stagger delays for desktop */
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.1s; }
+    .stagger-3 { animation-delay: 0.15s; }
+    .stagger-4 { animation-delay: 0.2s; }
+    .stagger-5 { animation-delay: 0.25s; }
+    .stagger-6 { animation-delay: 0.3s; }
+    .stagger-7 { animation-delay: 0.35s; }
+    .stagger-8 { animation-delay: 0.4s; }
+
+    /* Mobile: faster, simpler opacity-only */
+    @media (max-width: 768px) {
+      .animate-fade-in-up {
+        animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+      }
+      .stagger-1 { animation-delay: 0s; }
+      .stagger-2 { animation-delay: 0.03s; }
+      .stagger-3 { animation-delay: 0.06s; }
+      .stagger-4 { animation-delay: 0.09s; }
+      .stagger-5 { animation-delay: 0.12s; }
+      .stagger-6 { animation-delay: 0.15s; }
+      .stagger-7 { animation-delay: 0.18s; }
+      .stagger-8 { animation-delay: 0.21s; }
+    }
+
+    /* Pillar band hover - desktop only */
+    .pillar-band {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (min-width: 768px) {
+      .pillar-band:hover .pillar-image {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .pillar-band:hover .pillar-overlay {
+        opacity: 0.15;
+      }
+      .pillar-band:hover .pillar-title {
+        transform: translateX(12px);
+      }
+      .pillar-band:hover .pillar-subtitle {
+        transform: translateX(8px);
+      }
+      .pillar-band:hover .pillar-arrow {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .pillar-band:hover {
+        transform: translateY(-3px);
+      }
+    }
+
+    .pillar-image {
+      opacity: 0;
+      transform: scale(1.05);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pillar-overlay {
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pillar-title {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pillar-subtitle {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pillar-arrow {
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Nav link hover - underline slide + move */
+    .nav-link {
+      position: relative;
+      transition: color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+    }
+    .nav-link:hover {
+      transform: translateY(-2px);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .nav-link.nav-red::after { background-color: #E3000F; }
+    .nav-link.nav-blue::after { background-color: #0055A4; }
+    .nav-link.nav-yellow::after { background-color: #FFCC00; }
+    .nav-link.nav-black::after { background-color: #000; }
+
+    /* Hero title hover - slight scale */
+    .hero-title-hover {
+      transition: letter-spacing 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-title-hover:hover {
+      letter-spacing: -0.02em;
+    }
+
+    /* Stats item hover */
+    .stat-item {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (min-width: 768px) {
+      .stat-item:hover {
+        transform: translateY(-3px);
+      }
+    }
+
+    /* Footer link hover - slide underline + move */
+    .footer-link {
+      position: relative;
+      transition: color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .footer-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: currentColor;
+      transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .footer-link:hover {
+      transform: translateX(4px);
+    }
+    .footer-link:hover::after {
+      width: 100%;
+    }
+
+    /* Mobile: permanent "view gallery" hint */
+    .mobile-gallery-btn {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .mobile-gallery-btn {
+        display: flex;
+      }
+    }
+
+    /* Full-screen menu animation */
+    .menu-overlay {
+      transition: none;
+    }
+    .menu-overlay.active {
+      animation: heavyPullDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .menu-overlay.closing {
+      animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) reverse forwards;
+    }
+
+    /* Menu item stagger */
+    .menu-item {
+      animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+    .menu-item-1 { animation-delay: 0.1s; }
+    .menu-item-2 { animation-delay: 0.15s; }
+    .menu-item-3 { animation-delay: 0.2s; }
+    .menu-item-4 { animation-delay: 0.25s; }
+    .menu-item-5 { animation-delay: 0.3s; }
+    .menu-item-6 { animation-delay: 0.35s; }
+    .menu-item-7 { animation-delay: 0.4s; }
+
+    /* Touch target minimum 48px */
+    .touch-target {
+      min-height: 48px;
+      min-width: 48px;
+    }
+
+    /* Swiss grid lines (subtle) */
+    .grid-line-left {
+      border-left: 1px solid rgba(0,0,0,0.06);
+    }
+
+    /* Prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Scrollbar - minimal Swiss style */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E3000F;
+    }
+
+    /* Pillar band image backgrounds */
+    .bg-train-model {
+      background-image: url('https://images.unsplash.com/photo-1558618294-d4976c3935a4?w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    .bg-train-service {
+      background-image: url('https://images.unsplash.com/photo-1530650547676-0e5970f09a6e?w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    .bg-station {
+      background-image: url('https://images.unsplash.com/photo-1558002038-1f1e9a5e6ef?w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    .bg-railway-line {
+      background-image: url('https://images.unsplash.com/photo-1505832018823-7ddb7fb1a5c0?w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="bg-pure-white text-pure-black font-swiss overflow-x-hidden">
+
+  <!-- ========================================
+       NAVIGATION - Desktop & Mobile
+       ======================================== -->
+
+  <!-- Desktop: minimal top bar -->
+  <nav class="fixed top-0 left-0 w-full z-40 bg-pure-white/95 backdrop-blur-sm border-b border-black/6">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 h-14 md:h-16 flex items-center justify-between">
+      <a href="index.html" class="text-black font-bold tracking-tight text-sm md:text-base uppercase">
+        CR<span class="text-rail-red">W</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="detail.html" class="nav-link nav-red section-label text-black hover:text-rail-red touch-target flex items-center">车型</a>
+        <a href="#" class="nav-link nav-blue section-label text-black hover:text-industry-blue touch-target flex items-center">车次</a>
+        <a href="#" class="nav-link nav-yellow section-label text-black hover:text-signal-yellow touch-target flex items-center">车站</a>
+        <a href="#" class="nav-link nav-black section-label text-black hover:text-black/60 touch-target flex items-center">路线</a>
+      </div>
+      <!-- Mobile: MENU button -->
+      <button id="menuBtn" class="md:hidden touch-target flex items-center justify-center text-sm font-bold uppercase tracking-widest text-black" aria-label="打开导航菜单">
+        MENU
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile: Full-screen overlay menu -->
+  <div id="menuOverlay" class="menu-overlay fixed inset-0 z-50 bg-pure-black text-pure-white flex flex-col items-start justify-start pt-20 md:pt-24 pl-6 md:pl-12 hidden">
+    <button id="menuCloseBtn" class="touch-target absolute top-4 right-4 md:top-6 md:right-8 text-white text-sm font-bold uppercase tracking-widest" aria-label="关闭导航菜单">
+      CLOSE
+    </button>
+    <div class="flex flex-col gap-6 md:gap-8 mt-8 md:mt-12">
+      <a href="detail.html" class="menu-item menu-item-1 pillar-title text-white hover:text-rail-red transition-colors">车型</a>
+      <a href="#" class="menu-item menu-item-2 pillar-title text-white hover:text-industry-blue transition-colors">车次</a>
+      <a href="#" class="menu-item menu-item-3 pillar-title text-white hover:text-signal-yellow transition-colors">车站</a>
+      <a href="#" class="menu-item menu-item-4 pillar-title text-white hover:text-white/60 transition-colors">路线</a>
+      <div class="menu-item menu-item-5 mt-16 md:mt-24">
+        <span class="pillar-count text-white/50">知识图谱</span>
+      </div>
+      <a href="#" class="menu-item menu-item-6 pillar-count text-white/50 hover:text-white">版本记录</a>
+      <a href="#" class="menu-item menu-item-7 pillar-count text-white/50 hover:text-white">登录</a>
+    </div>
+    <!-- Swiss grid decoration -->
+    <div class="absolute bottom-8 md:bottom-12 left-6 md:left-12">
+      <span class="pillar-count text-white/30 tracking-widest">CHINA RAILWAY WIKI</span>
+    </div>
+  </div>
+
+
+  <!-- ========================================
+       HERO SECTION - The First Impression
+       ======================================== -->
+
+  <main class="pt-14 md:pt-16">
+    <section class="min-h-[50vh] md:min-h-[60vh] lg:min-h-[75vh] flex flex-col items-start justify-end px-4 md:px-8 lg:px-12 pb-8 md:pb-12 lg:pb-16 border-b border-black/6">
+      <!-- Grid decoration lines - desktop only -->
+      <div class="hidden lg:flex absolute top-16 left-0 w-full h-full opacity-[0.04]">
+        <div class="w-full grid grid-cols-12 h-full">
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+          <div class="col-span-1 border-r border-black"></div>
+        </div>
+      </div>
+
+      <div class="max-w-[1440px] mx-auto w-full relative z-10">
+        <!-- Label -->
+        <p class="section-label text-black/40 mb-3 md:mb-4 animate-fade-in stagger-1">
+          知识库 / KNOWLEDGE BASE
+        </p>
+        <!-- Giant Title -->
+        <h1 class="hero-title hero-title-hover text-pure-black animate-fade-in-up stagger-2 cursor-default">
+          中国铁路<br class="md:hidden lg:inline">百科
+        </h1>
+        <!-- Subtitle -->
+        <p class="hero-subtitle text-black/50 mt-4 md:mt-6 lg:mt-8 animate-fade-in stagger-3 max-w-lg md:max-w-xl">
+          以极简界面与严格网格，向用户展示中国铁路的工业之美。
+        </p>
+        <!-- Stats row -->
+        <div class="flex flex-wrap gap-6 md:gap-12 mt-8 md:mt-12 lg:mt-16 animate-fade-in stagger-4">
+          <div class="stat-item">
+            <span class="section-label text-rail-red">车型</span>
+            <span class="pillar-count text-black mt-1 block">37 条词条</span>
+          </div>
+          <div class="stat-item">
+            <span class="section-label text-industry-blue">车次</span>
+            <span class="pillar-count text-black mt-1 block">5,842 条记录</span>
+          </div>
+          <div class="stat-item">
+            <span class="section-label text-signal-yellow">车站</span>
+            <span class="pillar-count text-black mt-1 block">6,172 个站点</span>
+          </div>
+          <div class="stat-item">
+            <span class="section-label text-pure-black">路线</span>
+            <span class="pillar-count text-black mt-1 block">89 条线路</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================
+       4 PILLARS - Entry Bands
+       ======================================== -->
+
+    <section class="flex flex-col">
+      <!-- PILLAR 1: 车型 (Rolling Stock) - Railway Red -->
+      <a href="detail.html" class="pillar-band group relative block w-full overflow-hidden animate-fade-in-up stagger-5" style="min-height: clamp(200px, 25vh, 280px);">
+        <!-- Background image (revealed on hover desktop, always hidden on mobile) -->
+        <div class="pillar-image bg-train-model absolute inset-0 z-0"></div>
+        <!-- Color overlay -->
+        <div class="pillar-overlay absolute inset-0 z-1 bg-rail-red/90"></div>
+        <!-- Content -->
+        <div class="relative z-10 px-4 md:px-8 lg:px-12 py-8 md:py-12 lg:py-16 flex flex-col items-start justify-end min-h-[clamp(200px,25vh,280px)]">
+          <div class="max-w-[1440px] mx-auto w-full">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 md:gap-4">
+              <div>
+                <span class="section-label text-white/70">01</span>
+                <h2 class="pillar-title text-pure-white">车型</h2>
+                <span class="pillar-subtitle pillar-count text-white/60 mt-1">ROLLING STOCK</span>
+              </div>
+              <div class="hidden md:flex items-center gap-2 text-white/70">
+                <span class="pillar-count">CRH380A · CR400AF · HXD3C</span>
+                <span class="pillar-arrow section-label">→</span>
+              </div>
+            </div>
+            <!-- Mobile: permanent gallery hint -->
+            <div class="mobile-gallery-btn mt-4 items-center gap-2 text-white/70">
+              <span class="pillar-count">查看图鉴 →</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- PILLAR 2: 车次 (Train Services) - Industry Blue -->
+      <a href="#" class="pillar-band group relative block w-full overflow-hidden animate-fade-in-up stagger-6" style="min-height: clamp(200px, 25vh, 280px);">
+        <div class="pillar-image bg-train-service absolute inset-0 z-0"></div>
+        <div class="pillar-overlay absolute inset-0 z-1 bg-industry-blue/90"></div>
+        <div class="relative z-10 px-4 md:px-8 lg:px-12 py-8 md:py-12 lg:py-16 flex flex-col items-start justify-end min-h-[clamp(200px,25vh,280px)]">
+          <div class="max-w-[1440px] mx-auto w-full">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 md:gap-4">
+              <div>
+                <span class="section-label text-white/70">02</span>
+                <h2 class="pillar-title text-pure-white">车次</h2>
+                <span class="pillar-subtitle pillar-count text-white/60 mt-1">TRAIN SERVICES</span>
+              </div>
+              <div class="hidden md:flex items-center gap-2 text-white/70">
+                <span class="pillar-count">G1 · T109 · K3</span>
+                <span class="pillar-arrow section-label">→</span>
+              </div>
+            </div>
+            <div class="mobile-gallery-btn mt-4 items-center gap-2 text-white/70">
+              <span class="pillar-count">查看图鉴 →</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- PILLAR 3: 车站 (Stations) - Signal Yellow -->
+      <a href="#" class="pillar-band group relative block w-full overflow-hidden animate-fade-in-up stagger-7" style="min-height: clamp(200px, 25vh, 280px);">
+        <div class="pillar-image bg-station absolute inset-0 z-0"></div>
+        <div class="pillar-overlay absolute inset-0 z-1 bg-signal-yellow/90"></div>
+        <div class="relative z-10 px-4 md:px-8 lg:px-12 py-8 md:py-12 lg:py-16 flex flex-col items-start justify-end min-h-[clamp(200px,25vh,280px)]">
+          <div class="max-w-[1440px] mx-auto w-full">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 md:gap-4">
+              <div>
+                <span class="section-label text-pure-black/50">03</span>
+                <h2 class="pillar-title text-pure-black">车站</h2>
+                <span class="pillar-subtitle pillar-count text-pure-black/60 mt-1">STATIONS</span>
+              </div>
+              <div class="hidden md:flex items-center gap-2 text-pure-black/60">
+                <span class="pillar-count">北京南站 · 广州南站 · 汉口站</span>
+                <span class="pillar-arrow section-label text-pure-black/60">→</span>
+              </div>
+            </div>
+            <div class="mobile-gallery-btn mt-4 items-center gap-2 text-pure-black/60">
+              <span class="pillar-count">查看图鉴 →</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- PILLAR 4: 路线 (Railway Lines) - Pure Black -->
+      <a href="#" class="pillar-band group relative block w-full overflow-hidden animate-fade-in-up stagger-8" style="min-height: clamp(200px, 25vh, 280px);">
+        <div class="pillar-image bg-railway-line absolute inset-0 z-0"></div>
+        <div class="pillar-overlay absolute inset-0 z-1 bg-pure-black/85"></div>
+        <div class="relative z-10 px-4 md:px-8 lg:px-12 py-8 md:py-12 lg:py-16 flex flex-col items-start justify-end min-h-[clamp(200px,25vh,280px)]">
+          <div class="max-w-[1440px] mx-auto w-full">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 md:gap-4">
+              <div>
+                <span class="section-label text-white/70">04</span>
+                <h2 class="pillar-title text-pure-white">路线</h2>
+                <span class="pillar-subtitle pillar-count text-white/60 mt-1">RAILWAY LINES</span>
+              </div>
+              <div class="hidden md:flex items-center gap-2 text-white/70">
+                <span class="pillar-count">京广高铁 · 陇海铁路 · 青藏铁路</span>
+                <span class="pillar-arrow section-label">→</span>
+              </div>
+            </div>
+            <div class="mobile-gallery-btn mt-4 items-center gap-2 text-white/70">
+              <span class="pillar-count">查看图鉴 →</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </section>
+
+
+    <!-- ========================================
+       FOOTER - Minimal Swiss
+       ======================================== -->
+
+    <footer class="border-t border-black/6 px-4 md:px-8 lg:px-12 py-8 md:py-12">
+      <div class="max-w-[1440px] mx-auto w-full">
+        <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 md:gap-8">
+          <div class="md:col-span-3 lg:col-span-4">
+            <span class="section-label text-black/40">CHINA RAILWAY WIKI</span>
+            <p class="pillar-count text-black/30 mt-3">以极简界面与严格网格，展示中国铁路的工业之美。</p>
+          </div>
+          <div class="md:col-span-2 lg:col-span-3">
+            <span class="section-label text-black/40 mb-3 block">板块</span>
+            <a href="detail.html" class="footer-link pillar-count text-black/50 hover:text-rail-red block mb-2 touch-target">车型</a>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-industry-blue block mb-2 touch-target">车次</a>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-signal-yellow block mb-2 touch-target">车站</a>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-black block mb-2 touch-target">路线</a>
+          </div>
+          <div class="md:col-span-1 lg:col-span-2">
+            <span class="section-label text-black/40 mb-3 block">功能</span>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-black block mb-2 touch-target">知识图谱</a>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-black block mb-2 touch-target">图鉴模式</a>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-black block mb-2 touch-target">版本记录</a>
+          </div>
+          <div class="md:col-span-1 lg:col-span-3">
+            <span class="section-label text-black/40 mb-3 block">关于</span>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-black block mb-2 touch-target">编辑规范</a>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-black block mb-2 touch-target">隐私政策</a>
+            <a href="#" class="footer-link pillar-count text-black/50 hover:text-black block mb-2 touch-target">联系我们</a>
+          </div>
+        </div>
+        <div class="border-t border-black/6 mt-8 pt-4 flex flex-col md:flex-row md:justify-between gap-2">
+          <span class="pillar-count text-black/30">© 2026 中国铁路百科</span>
+          <span class="pillar-count text-black/30">纯黑白 · 瑞士设计 · Mobile-First</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ========================================
+       JavaScript - Menu & Interactions
+       ======================================== -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    menuBtn.addEventListener('click', () => {
+      menuOverlay.classList.remove('hidden', 'closing');
+      menuOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    menuCloseBtn.addEventListener('click', () => {
+      menuOverlay.classList.remove('active');
+      menuOverlay.classList.add('closing');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        menuOverlay.classList.add('hidden');
+        menuOverlay.classList.remove('closing');
+      }, 350);
+    });
+
+    // Close menu on link click
+    menuOverlay.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOverlay.classList.remove('active');
+        menuOverlay.classList.add('closing');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          menuOverlay.classList.add('hidden');
+          menuOverlay.classList.remove('closing');
+        }, 350);
+      });
+    });
+
+    // Touch ripple effect for pillar bands (mobile)
+    document.querySelectorAll('.pillar-band').forEach(band => {
+      band.addEventListener('touchstart', function(e) {
+        this.style.transform = 'scale(0.98)';
+        this.style.transition = 'transform 0.1s ease';
+      }, { passive: true });
+      band.addEventListener('touchend', function() {
+        this.style.transform = 'scale(1)';
+        this.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+      }, { passive: true });
+    });
+  </script>
+
+</body>
+</html>

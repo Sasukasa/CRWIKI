@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CR400AF 复兴号 | 中国铁路百科</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'rail-red': '#E3000F',
+            'industry-blue': '#0055A4',
+            'signal-yellow': '#FFCC00',
+            'pure-black': '#000000',
+            'pure-white': '#FFFFFF',
+          },
+          fontFamily: {
+            'swiss': ['Helvetica Neue', 'Inter', 'Roboto', 'Arial', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* ========================================
+       SWISS DESIGN - Detail Page Styles
+       ======================================== */
+
+    * {
+      font-family: 'Helvetica Neue', 'Inter', 'Roboto', 'Arial', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    *, *::before, *::after {
+      border-radius: 0 !important;
+    }
+
+    .text-left-force {
+      text-align: left !important;
+    }
+
+    /* Typography Scale */
+    .detail-title {
+      font-size: clamp(2.5rem, 10vw, 7rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .detail-subtitle {
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .section-label {
+      font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .spec-label {
+      font-size: clamp(0.6rem, 1vw, 0.75rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.45);
+    }
+
+    .spec-value {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .body-text {
+      font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+      font-weight: 400;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      color: rgba(0,0,0,0.7);
+    }
+
+    .pillar-count {
+      font-size: clamp(0.75rem, 1.5vw, 1.25rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    /* ========================================
+       Animations
+       ======================================== */
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideFromLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes heavyPullDown {
+      0% { transform: translateY(-100vh); opacity: 0; }
+      30% { opacity: 0.3; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    .animate-slide-left {
+      animation: slideFromLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    .animate-scale-in {
+      animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    /* Stagger delays */
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.1s; }
+    .stagger-3 { animation-delay: 0.15s; }
+    .stagger-4 { animation-delay: 0.2s; }
+    .stagger-5 { animation-delay: 0.25s; }
+    .stagger-6 { animation-delay: 0.3s; }
+    .stagger-7 { animation-delay: 0.35s; }
+    .stagger-8 { animation-delay: 0.4s; }
+    .stagger-9 { animation-delay: 0.45s; }
+    .stagger-10 { animation-delay: 0.5s; }
+    .stagger-11 { animation-delay: 0.55s; }
+    .stagger-12 { animation-delay: 0.6s; }
+
+    /* Mobile: faster opacity-only */
+    @media (max-width: 768px) {
+      .animate-fade-in-up {
+        animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+      }
+      .animate-slide-left {
+        animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+      }
+    }
+
+    /* Menu animation */
+    .menu-overlay.active {
+      animation: heavyPullDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes menuStagger {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .menu-item {
+      animation: menuStagger 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+    .menu-item-1 { animation-delay: 0.1s; }
+    .menu-item-2 { animation-delay: 0.15s; }
+    .menu-item-3 { animation-delay: 0.2s; }
+    .menu-item-4 { animation-delay: 0.25s; }
+    .menu-item-5 { animation-delay: 0.3s; }
+
+    /* Gallery / Lightbox */
+    .lightbox {
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox-image {
+      animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Swipe hint animation */
+    @keyframes swipeHint {
+      0%, 100% { transform: translateX(0); opacity: 0.5; }
+      50% { transform: translateX(-15px); opacity: 1; }
+    }
+
+    .swipe-hint {
+      animation: swipeHint 2s ease-in-out infinite;
+    }
+
+    /* Touch targets */
+    .touch-target {
+      min-height: 48px;
+      min-width: 48px;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #E3000F; }
+
+    /* Prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Spec table mobile horizontal scroll */
+    .spec-scroll::-webkit-scrollbar {
+      height: 2px;
+    }
+    .spec-scroll::-webkit-scrollbar-thumb {
+      background: #E3000F;
+    }
+
+    /* Back link hover */
+    .back-link {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .back-link:hover {
+      transform: translateX(-6px);
+      color: #E3000F;
+    }
+
+    /* Nav link hover - underline slide + lift */
+    .nav-link {
+      position: relative;
+      transition: color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+    }
+    .nav-link:hover { transform: translateY(-2px); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.nav-red::after { background-color: #E3000F; }
+    .nav-link.nav-blue::after { background-color: #0055A4; }
+    .nav-link.nav-yellow::after { background-color: #FFCC00; }
+    .nav-link.nav-black::after { background-color: #000; }
+
+    /* Related entry card */
+    .related-card {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (min-width: 768px) {
+      .related-card:hover {
+        transform: translateY(-6px);
+      }
+      .related-card:hover .related-overlay {
+        opacity: 0.3;
+      }
+      .related-card:hover .related-title {
+        transform: translateX(4px);
+      }
+    }
+    .related-overlay {
+      transition: opacity 0.3s ease;
+    }
+    .related-title {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Spec row hover */
+    .spec-row {
+      transition: background-color 0.15s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (min-width: 768px) {
+      .spec-row:hover {
+        background-color: rgba(0,0,0,0.02);
+        transform: translateX(3px);
+      }
+    }
+
+    /* Knowledge graph link hover */
+    .kg-link {
+      transition: color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .kg-link:hover {
+      transform: translateX(6px);
+    }
+
+    /* Edit button hover */
+    .edit-btn {
+      transition: background-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .edit-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Gallery button hover */
+    .gallery-btn {
+      transition: background-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .gallery-btn:hover {
+      transform: translateY(-2px) translateX(2px);
+    }
+
+    /* Spec grid cell hover */
+    .spec-cell {
+      transition: background-color 0.15s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (min-width: 768px) {
+      .spec-cell:hover {
+        background-color: rgba(227,0,15,0.04);
+        transform: translateY(-2px);
+      }
+    }
+  </style>
+</head>
+<body class="bg-pure-white text-pure-black font-swiss overflow-x-hidden">
+
+  <!-- ========================================
+       NAVIGATION
+       ======================================== -->
+  <nav class="fixed top-0 left-0 w-full z-40 bg-pure-white/95 backdrop-blur-sm border-b border-black/6">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 h-14 md:h-16 flex items-center justify-between">
+      <a href="index.html" class="text-black font-bold tracking-tight text-sm md:text-base uppercase">
+        CR<span class="text-rail-red">W</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="detail.html" class="nav-link nav-red section-label text-rail-red touch-target flex items-center">车型</a>
+        <a href="#" class="nav-link nav-blue section-label text-black hover:text-industry-blue touch-target flex items-center">车次</a>
+        <a href="#" class="nav-link nav-yellow section-label text-black hover:text-signal-yellow touch-target flex items-center">车站</a>
+        <a href="#" class="nav-link nav-black section-label text-black hover:text-black/60 touch-target flex items-center">路线</a>
+      </div>
+      <button id="menuBtn" class="md:hidden touch-target flex items-center justify-center text-sm font-bold uppercase tracking-widest text-black" aria-label="打开导航菜单">
+        MENU
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile full-screen menu -->
+  <div id="menuOverlay" class="menu-overlay fixed inset-0 z-50 bg-pure-black text-pure-white flex flex-col items-start justify-start pt-20 md:pt-24 pl-6 md:pl-12 hidden">
+    <button id="menuCloseBtn" class="touch-target absolute top-4 right-4 text-white text-sm font-bold uppercase tracking-widest" aria-label="关闭导航菜单">
+      CLOSE
+    </button>
+    <div class="flex flex-col gap-6 md:gap-8 mt-8 md:mt-12">
+      <a href="detail.html" class="menu-item menu-item-1 text-white hover:text-rail-red transition-colors detail-subtitle">车型</a>
+      <a href="#" class="menu-item menu-item-2 text-white hover:text-industry-blue transition-colors detail-subtitle">车次</a>
+      <a href="#" class="menu-item menu-item-3 text-white hover:text-signal-yellow transition-colors detail-subtitle">车站</a>
+      <a href="#" class="menu-item menu-item-4 text-white hover:text-white/60 transition-colors detail-subtitle">路线</a>
+      <a href="#" class="menu-item menu-item-5 mt-16 pillar-count text-white/50 hover:text-white">登录</a>
+    </div>
+    <div class="absolute bottom-8 md:bottom-12 left-6 md:left-12">
+      <span class="pillar-count text-white/30 tracking-widest">CHINA RAILWAY WIKI</span>
+    </div>
+  </div>
+
+
+  <!-- ========================================
+       DETAIL PAGE CONTENT
+       ======================================== -->
+  <main class="pt-14 md:pt-16">
+
+    <!-- Desktop: 12-col grid layout. Left 4 = fixed, Right 8 = scroll -->
+    <!-- Mobile: single column stacked -->
+
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12">
+      <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+
+        <!-- LEFT COLUMN: Title & Specs (4 cols desktop, stacked on mobile) -->
+        <div class="lg:col-span-4 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:overflow-y-auto lg:border-r lg:border-black/6 lg:pr-8">
+
+          <!-- Back link -->
+          <a href="index.html" class="back-link inline-flex items-center gap-2 section-label text-black/40 mt-6 md:mt-8 animate-fade-in stagger-1">
+            ← 车型
+          </a>
+
+          <!-- Pillar badge -->
+          <div class="mt-4 md:mt-6 animate-fade-in stagger-2">
+            <span class="inline-block bg-rail-red text-pure-white section-label px-3 py-1">ROLLING STOCK</span>
+          </div>
+
+          <!-- Giant Title -->
+          <h1 class="detail-title text-pure-black mt-4 md:mt-6 animate-fade-in-up stagger-3">
+            CR400AF
+          </h1>
+
+          <!-- Chinese name -->
+          <p class="detail-subtitle text-black/70 mt-2 animate-fade-in stagger-4">
+            复兴号
+          </p>
+
+          <!-- Category tag -->
+          <p class="pillar-count text-rail-red mt-3 animate-fade-in stagger-5">
+            电力动车组 / EMU
+          </p>
+
+          <!-- Divider -->
+          <div class="border-t border-black/6 mt-8 md:mt-12 animate-fade-in stagger-6"></div>
+
+          <!-- SPEC TABLE -->
+          <div class="mt-6 md:mt-8 animate-fade-in stagger-7">
+            <span class="section-label text-black/40 mb-6 block">技术参数 / SPECIFICATIONS</span>
+
+            <!-- Mobile: horizontal scroll wrapper -->
+            <div class="spec-scroll overflow-x-auto -mx-4 md:mx-0">
+              <table class="w-full md:w-auto min-w-[280px] md:min-w-0">
+                <tbody>
+                  <tr class="spec-row border-b border-black/6">
+                    <td class="spec-label py-3 pr-4 min-w-[120px]">设计时速</td>
+                    <td class="spec-value py-3">350 km/h</td>
+                  </tr>
+                  <tr class="spec-row border-b border-black/6">
+                    <td class="spec-label py-3 pr-4">最高运营时速</td>
+                    <td class="spec-value py-3">350 km/h</td>
+                  </tr>
+                  <tr class="spec-row border-b border-black/6">
+                    <td class="spec-label py-3 pr-4">编组形式</td>
+                    <td class="spec-value py-3">8辆编组</td>
+                  </tr>
+                  <tr class="spec-row border-b border-black/6">
+                    <td class="spec-label py-3 pr-4">定员</td>
+                    <td class="spec-value py-3">576人</td>
+                  </tr>
+                  <tr class="spec-row border-b border-black/6">
+                    <td class="spec-label py-3 pr-4">总长度</td>
+                    <td class="spec-value py-3">约 208.9m</td>
+                  </tr>
+                  <tr class="spec-row border-b border-black/6">
+                    <td class="spec-label py-3 pr-4">牵引功率</td>
+                    <td class="spec-value py-3">10,240 kW</td>
+                  </tr>
+                  <tr class="spec-row border-b border-black/6">
+                    <td class="spec-label py-3 pr-4">轴重</td>
+                    <td class="spec-value py-3">≤ 17t</td>
+                  </tr>
+                  <tr class="spec-row border-b border-black/6">
+                    <td class="spec-label py-3 pr-4">制造商</td>
+                    <td class="spec-value py-3">中车青岛四方</td>
+                  </tr>
+                  <tr class="spec-row">
+                    <td class="spec-label py-3 pr-4">配属局段</td>
+                    <td class="spec-value py-3">北京/上海/广州</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Version info -->
+          <div class="mt-8 md:mt-12 animate-fade-in stagger-8">
+            <span class="section-label text-black/40 mb-3 block">版本信息</span>
+            <p class="pillar-count text-black/50">最后编辑: 2026-07-12</p>
+            <p class="pillar-count text-black/50">版本 #42 · 编辑者: @railfan_zh</p>
+            <a href="#" class="pillar-count text-rail-red hover:text-rail-red/70 transition-colors mt-2 inline-block touch-target">查看完整版本记录 →</a>
+          </div>
+
+          <!-- Knowledge graph links (mobile: below specs, desktop: in sidebar) -->
+          <div class="mt-8 md:mt-12 pb-8 lg:pb-16 animate-fade-in stagger-9">
+            <span class="section-label text-black/40 mb-3 block">关联词条</span>
+            <div class="flex flex-col gap-2">
+              <a href="#" class="kg-link pillar-count text-rail-red hover:text-rail-red/70 transition-colors touch-target py-2">CR400BF (复兴号-长客) →</a>
+              <a href="#" class="kg-link pillar-count text-industry-blue hover:text-industry-blue/70 transition-colors touch-target py-2">京沪高铁 →</a>
+              <a href="#" class="kg-link pillar-count text-signal-yellow hover:text-signal-yellow/70 transition-colors touch-target py-2">北京南站 →</a>
+              <a href="#" class="kg-link pillar-count text-black/50 hover:text-black/70 transition-colors touch-target py-2">CRH380A →</a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- RIGHT COLUMN: Content & Images (8 cols desktop, stacked on mobile) -->
+        <div class="lg:col-span-8 lg:pl-8">
+
+          <!-- Hero image - full width -->
+          <div class="mt-6 md:mt-8 lg:mt-0 -mx-4 md:-mx-8 lg:-mx-0 animate-scale-in stagger-5">
+            <div class="relative w-full overflow-hidden" style="aspect-ratio: 16/9;">
+              <img src="https://images.unsplash.com/photo-1558618294-d4976c3935a4?w=1400&q=85"
+                   alt="CR400AF 复兴号列车"
+                   class="w-full h-full object-cover"
+                   loading="eager">
+              <!-- View gallery button - mobile permanent -->
+              <button id="galleryBtn" class="gallery-btn absolute bottom-4 right-4 bg-pure-black text-pure-white section-label px-4 py-3 touch-target flex items-center gap-2 hover:bg-rail-red">
+                查看图鉴
+                <span class="text-xs">②</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Content blocks with huge vertical spacing (mobile) -->
+
+          <!-- Block 1: Overview -->
+          <div class="mt-12 md:mt-16 lg:mt-16 animate-fade-in-up stagger-6">
+            <span class="section-label text-black/40 mb-4 block">概述 / OVERVIEW</span>
+            <p class="body-text mb-6 md:mb-8">
+              CR400AF是中国铁路新一代高速动车组的代表车型之一，隶属于"复兴号"系列。由中车青岛四方机车车辆股份有限公司研制，于2017年6月正式投入运营。作为中国达到世界领先水平的高速列车，复兴号实现了从"跟跑"到"领跑"的历史性跨越。
+            </p>
+            <p class="body-text mb-16 md:mb-12">
+              CR400AF在设计上充分体现了中国自主创新的成果，其整车设计及关键部件均拥有完全自主知识产权。列车采用了全新的低阻力流线型头型，进一步降低了空气阻力；车体结构更加轻量化，同时提升了气密性和隔音性能，为旅客提供更为舒适的乘坐体验。
+            </p>
+          </div>
+
+          <!-- Block 2: History -->
+          <div class="mb-16 md:mb-12 animate-fade-in-up stagger-7">
+            <span class="section-label text-black/40 mb-4 block">历史沿革 / HISTORY</span>
+            <div class="border-l-2 border-rail-red ml-0 md:ml-4 pl-4 md:pl-6">
+              <div class="mb-8 md:mb-6">
+                <span class="spec-label">2013</span>
+                <p class="body-text mt-1">中国铁路总公司正式启动新一代高速动车组研制项目，代号"复兴"。</p>
+              </div>
+              <div class="mb-8 md:mb-6">
+                <span class="spec-label">2015</span>
+                <p class="body-text mt-1">四方股份完成首列CR400AF样车制造，开始进行线路试验。</p>
+              </div>
+              <div class="mb-8 md:mb-6">
+                <span class="spec-label">2016.07</span>
+                <p class="body-text mt-1">在郑徐高铁上进行时速420km/h交会试验，成功创造世界纪录。</p>
+              </div>
+              <div>
+                <span class="spec-label">2017.06</span>
+                <p class="body-text mt-1">CR400AF在京沪高铁正式投入商业运营，标志着中国高铁进入"复兴号"时代。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Full-width image -->
+          <div class="-mx-4 md:-mx-8 lg:-mx-0 mb-16 md:mb-12 animate-scale-in stagger-8">
+            <div class="relative w-full overflow-hidden" style="aspect-ratio: 21/9;">
+              <img src="https://images.unsplash.com/photo-1530650547676-0e5970f09a6e?w=1400&q=85"
+                   alt="CR400AF 运行场景"
+                   class="w-full h-full object-cover"
+                   loading="lazy">
+            </div>
+            <span class="spec-label text-black/30 mt-2 block px-4 md:px-8 lg:px-0">CR400AF在京沪高铁全线投入商业运营 / 图：中国铁路</span>
+          </div>
+
+          <!-- Block 3: Design Features -->
+          <div class="mb-16 md:mb-12 animate-fade-in-up stagger-9">
+            <span class="section-label text-black/40 mb-4 block">设计特征 / DESIGN FEATURES</span>
+            <p class="body-text mb-6 md:mb-8">
+              CR400AF的头型设计灵感来源于"飞龙"意象，流线型曲线从前端向后延伸，形成极具辨识度的视觉特征。相较于CRH380系列，复兴号的头型降低了约12%的空气阻力系数。
+            </p>
+
+            <!-- Spec grid - mobile horizontal scroll -->
+            <div class="spec-scroll overflow-x-auto -mx-4 md:mx-0">
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-0 min-w-[500px] md:min-w-0">
+                <div class="spec-cell border border-black/6 p-4 md:p-6">
+                  <span class="spec-label">阻力系数</span>
+                  <span class="spec-value block mt-1">降低 12%</span>
+                </div>
+                <div class="spec-cell border border-black/6 p-4 md:p-6">
+                  <span class="spec-label">气密性</span>
+                  <span class="spec-value block mt-1">提升 30%</span>
+                </div>
+                <div class="spec-cell border border-black/6 p-4 md:p-6">
+                  <span class="spec-label">隔音性能</span>
+                  <span class="spec-value block mt-1">提升 20%</span>
+                </div>
+                <div class="spec-cell border border-black/6 p-4 md:p-6">
+                  <span class="spec-label">座位间距</span>
+                  <span class="spec-value block mt-1">1020mm</span>
+                </div>
+                <div class="spec-cell border border-black/6 p-4 md:p-6">
+                  <span class="spec-label">WiFi覆盖</span>
+                  <span class="spec-value block mt-1">全列车</span>
+                </div>
+                <div class="spec-cell border border-black/6 p-4 md:p-6">
+                  <span class="spec-label">智能监控</span>
+                  <span class="spec-value block mt-1">3,000+ 传感器</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Block 4: Deployment -->
+          <div class="mb-16 md:mb-12 animate-fade-in-up stagger-10">
+            <span class="section-label text-black/40 mb-4 block">配属与运营 / DEPLOYMENT</span>
+            <p class="body-text mb-8 md:mb-8">
+              CR400AF目前主要配属北京局、上海局和广州局集团公司，承担京沪高铁、京广高铁等核心干线的运营任务。列车编组以8辆标准编组为主，也可重联运行形成16辆编组，以满足高峰时段的运输需求。
+            </p>
+          </div>
+
+          <!-- Full-width image -->
+          <div class="-mx-4 md:-mx-8 lg:-mx-0 mb-16 md:mb-12 animate-scale-in stagger-11">
+            <div class="relative w-full overflow-hidden" style="aspect-ratio: 3/2;">
+              <img src="https://images.unsplash.com/photo-1558002038-1f1e9a5e6ef?w=1400&q=85"
+                   alt="CR400AF 内部车厢"
+                   class="w-full h-full object-cover"
+                   loading="lazy">
+            </div>
+            <span class="spec-label text-black/30 mt-2 block px-4 md:px-8 lg:px-0">复兴号车厢内部全景 / 图：中国铁路</span>
+          </div>
+
+          <!-- Related Entries -->
+          <div class="mb-16 md:mb-12 animate-fade-in stagger-12">
+            <span class="section-label text-black/40 mb-6 block">关联词条 / RELATED ENTRIES</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              <a href="#" class="related-card group block overflow-hidden border border-black/6">
+                <div class="relative" style="aspect-ratio: 16/10;">
+                  <div class="absolute inset-0 bg-rail-red/80 related-overlay z-10"></div>
+                  <img src="https://images.unsplash.com/photo-1558618294-d4976c3935a4?w=600&q=75" alt="CR400BF" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4 md:p-6">
+                  <span class="section-label text-rail-red">车型</span>
+                  <h3 class="related-title spec-value mt-1">CR400BF 复兴号</h3>
+                  <span class="pillar-count text-black/40 mt-1">长春客车</span>
+                </div>
+              </a>
+              <a href="#" class="related-card group block overflow-hidden border border-black/6">
+                <div class="relative" style="aspect-ratio: 16/10;">
+                  <div class="absolute inset-0 bg-industry-blue/80 related-overlay z-10"></div>
+                  <img src="https://images.unsplash.com/photo-1530650547676-0e5970f09a6e?w=600&q=75" alt="京沪高铁" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4 md:p-6">
+                  <span class="section-label text-industry-blue">路线</span>
+                  <h3 class="related-title spec-value mt-1">京沪高铁</h3>
+                  <span class="pillar-count text-black/40 mt-1">全长 1,318km</span>
+                </div>
+              </a>
+              <a href="#" class="related-card group block overflow-hidden border border-black/6">
+                <div class="relative" style="aspect-ratio: 16/10;">
+                  <div class="absolute inset-0 bg-signal-yellow/80 related-overlay z-10"></div>
+                  <img src="https://images.unsplash.com/photo-1558002038-1f1e9a5e6ef?w=600&q=75" alt="北京南站" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4 md:p-6">
+                  <span class="section-label text-signal-yellow">车站</span>
+                  <h3 class="related-title spec-value mt-1">北京南站</h3>
+                  <span class="pillar-count text-black/40 mt-1">24台24线</span>
+                </div>
+              </a>
+              <a href="#" class="related-card group block overflow-hidden border border-black/6">
+                <div class="relative" style="aspect-ratio: 16/10;">
+                  <div class="absolute inset-0 bg-pure-black/80 related-overlay z-10"></div>
+                  <img src="https://images.unsplash.com/photo-1505832018823-7ddb7fb1a5c0?w=600&q=75" alt="CRH380A" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4 md:p-6">
+                  <span class="section-label text-black/50">车型</span>
+                  <h3 class="related-title spec-value mt-1">CRH380A</h3>
+                  <span class="pillar-count text-black/40 mt-1">和谐号系列</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Edit history hint -->
+          <div class="mb-8 md:mb-12 border-t border-black/6 pt-8 md:pt-12">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <span class="section-label text-black/40">编辑信息</span>
+                <p class="pillar-count text-black/50 mt-1">本词条由 12 位编辑者共同维护，累计 42 次修订。</p>
+              </div>
+              <a href="#" class="edit-btn inline-flex items-center justify-center bg-pure-black text-pure-white section-label px-6 py-4 touch-target hover:bg-rail-red">
+                编辑此词条
+              </a>
+            </div>
+          </div>
+
+        </div><!-- end right column -->
+      </div><!-- end grid -->
+    </div><!-- end max-w container -->
+  </main>
+
+
+  <!-- ========================================
+       LIGHTBOX / GALLERY MODE
+       ======================================== -->
+  <div id="lightbox" class="lightbox fixed inset-0 z-50 bg-pure-black hidden flex items-center justify-center">
+    <!-- Close button -->
+    <button id="lightboxClose" class="absolute top-4 right-4 md:top-8 md:right-8 text-white section-label touch-target hover:text-rail-red transition-colors">
+      CLOSE ✕
+    </button>
+
+    <!-- Image container -->
+    <div id="lightboxContent" class="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <img id="lightboxImg" class="lightbox-image max-w-full max-h-full object-contain" src="" alt="">
+    </div>
+
+    <!-- Navigation arrows -->
+    <button id="lightboxPrev" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white touch-target section-label">←</button>
+    <button id="lightboxNext" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white touch-target section-label">→</button>
+
+    <!-- Counter -->
+    <div class="absolute bottom-4 md:bottom-8 left-4 md:left-8">
+      <span id="lightboxCounter" class="pillar-count text-white/50">1 / 3</span>
+    </div>
+
+    <!-- Mobile swipe hint -->
+    <div class="absolute bottom-4 md:bottom-8 right-4 md:right-8 md:hidden">
+      <span class="swipe-hint pillar-count text-white/40">← 滑动切换 →</span>
+    </div>
+  </div>
+
+
+  <!-- ========================================
+       JavaScript
+       ======================================== -->
+  <script>
+    // ---- Menu ----
+    const menuBtn = document.getElementById('menuBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    menuBtn.addEventListener('click', () => {
+      menuOverlay.classList.remove('hidden');
+      menuOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    menuCloseBtn.addEventListener('click', () => {
+      menuOverlay.classList.add('hidden');
+      menuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    menuOverlay.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOverlay.classList.add('hidden');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ---- Gallery / Lightbox ----
+    const galleryBtn = document.getElementById('galleryBtn');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+
+    const galleryImages = [
+      'https://images.unsplash.com/photo-1558618294-d4976c3935a4?w=1400&q=85',
+      'https://images.unsplash.com/photo-1530650547676-0e5970f09a6e?w=1400&q=85',
+      'https://images.unsplash.com/photo-1558002038-1f1e9a5e6ef?w=1400&q=85',
+    ];
+    let currentImageIndex = 0;
+
+    function openLightbox(index) {
+      currentImageIndex = index;
+      lightboxImg.src = galleryImages[index];
+      lightboxCounter.textContent = `${index + 1} / ${galleryImages.length}`;
+      lightbox.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function showPrev() {
+      currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+      lightboxImg.src = galleryImages[currentImageIndex];
+      lightboxCounter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+    }
+
+    function showNext() {
+      currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+      lightboxImg.src = galleryImages[currentImageIndex];
+      lightboxCounter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+    }
+
+    galleryBtn.addEventListener('click', () => openLightbox(0));
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', showPrev);
+    lightboxNext.addEventListener('click', showNext);
+
+    // Mobile swipe support for lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) showNext();
+        else showPrev();
+      }
+    }, { passive: true });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      }
+    });
+  </script>
+
+</body>
+</html>
